@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+<body>
+
+    <div id="app">
+        <button @click="show=!show">点我</button>
+        <h2 v-if="show">Hello Vue!</h2>
+     <ul>
+        <li v-for="(user,index) in users" v-if="user.age==30">
+            {{index}}--{{user.name}}--{{user.age}}
+        </li>
+    </ul>
+<!--        v-if是不符合直接删除删除，v-show是隐藏.-->
+        <h2 v-show="show">你好，黑马</h2>
+    </div>
+<script type="text/javascript">
+       var app = new Vue({
+        el:"#app",
+        data:{
+            show:true,
+            users:[
+                {"name":"Tom","age":23},
+                {"name":"Dom","age":30},
+                {"name":"rogge","age":34}
+            ]
+        }
+     })
+</script>
+</body>
+</html>

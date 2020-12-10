@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+<body>
+<div id="app">
+    <input type="checkbox" value="Java" v-model="language">Java<br>
+    <input type="checkbox" value="Python" v-model="language">Python<br>
+    <input type="checkbox" value="Go" v-model="language">Go<br>
+    <h3>
+        选择了: {{ language.join(",")}}
+    </h3>
+</div>
+<script type="text/javascript">
+        var app = new Vue({
+        el:"#app",
+        data:{
+            language:[]
+        },
+
+        });
+
+</script>
+</body>
+</html>

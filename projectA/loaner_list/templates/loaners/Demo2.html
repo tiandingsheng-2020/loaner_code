@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12">
+    </script>
+</head>
+<body>
+<div id="app">
+    v-text:<span v-text="msg"></span><br>
+    v-html:<span v-html="msg"></span><br>
+</div>
+<script type="text/javascript">
+        var app = new Vue({
+        el:"#app",
+        data:{
+            msg:"<h2>Hello!</h2>"
+        },
+
+        });
+
+</script>
+</body>
+</html>

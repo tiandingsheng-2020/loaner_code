@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CN58-Loaner_list</title>
+<!--    因为Bootstrap的组件交互效果都是依赖于jQuery库写的插件，所以在使用bootstrap.js之前一定要先加载jquery.js才会产生效果-->
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js">
+    </script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+<body>
+<!--        container属性居中-->
+<div class="container page-header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <ul class="nav nav-pills" id="change_color">
+                <li v-for="item,index in items" :key="index" v-on:click="addClass(index)"
+                    v-bind:class="{ active:index==current}" role="presentation">
+                    <a href="##">
+                        {% verbatim myblock %}
+                        {{ item.title }}
+                        {% endverbatim myblock %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container page-body">
+   <div class="btn-group">
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">查看状态 <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">已发出</a></li>
+        <li><a href="#">库存</a></li>
+        <li><a href="#">All</a></li>
+        <li role="separator" class="divider"></li>
+      </ul>
+    </div><!-- /btn-group -->
+
+    <div class="body-main">
+
+        <table class="table table-bordered">
+            <tr>
+                <td>数量</td>
+                <td>SN</td>
+                <td>外借人</td>
+                <td>借出时间</td>
+                <td>状态</td>
+            </tr>
+            {% for loaner in loaner_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ loaner.loaner_sn }}</td>
+                <td>{{ loaner.loaner_request }}</td>
+                <td>{{ loaner.request_time }}</td>
+                <td>{% if loaner.loaner_status %}
+                        未借出
+                    {% else %}
+                        已借出
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div id="app">
+            <div>{{loaners}}</div>
+            <table class="table table-bordered">
+            <tr>
+                <td>数量</td>
+                <td>SN</td>
+                <td>外借人</td>
+                <td>借出时间</td>
+                <td>状态</td>
+            </tr>
+
+            <tr  v-for="loaner in loaners">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ loaner.loaner_sn }}</td>
+                <td>{{ loaner.loaner_request }}</td>
+                <td>{{ loaner.request_time }}</td>
+                <td>{% if loaner.loaner_status %}
+                        未借出
+                    {% else %}
+                        已借出
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#change_color',
+        data: {
+            current:0,
+                items: [
+                          {title:'Home'},
+                          {title:'Contact'},
+                          {title:'Messages'}
+                        ]
+
+         },
+         methods:{
+            addClass:function(index){
+                this.current=index;
+            }
+         },
+    })
+
+    var app = new Vue({
+            el:"#app",
+            data:{
+                loaners:null
+            },
+            created(){
+                //初始化加载数据
+                axios({
+                    url:"/loaner/fbv/list/",
+                    method:"get"
+                }).then(
+                    res=>{
+                        console.log(res);
+                        console.log(res.data)
+                        //将数据赋值到vue实例中的数据属性users.不能使用this,在axios回调函数中表示窗口,不是实例.
+                        app.loaners = res.data;
+                    }
+                ).catch(err=>alert(err));
+            }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(user,index) in users">
+            {{index}}--{{user.name}}--{{user.age}}
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+     var app = new Vue({
+        el:"#app",
+        data:{
+            users:[
+                {"name":"Tom","age":23},
+                {"name":"Dom","age":30},
+                {"name":"rogge","age":34}
+            ]
+        }
+     })
+</script>
+</body>
+</html>

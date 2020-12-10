@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+       <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="num++">增加</button>
+        <button @click="decrement">减少</button>
+        <h2>{{num}}</h2>
+
+        <div style="background-color:lightblue; width:100px; height:100px">
+            <button @click="print('点击了button。')">点我试试</button>
+
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var app = new Vue({
+        el:"#app",
+        data:{
+            num:1
+        },
+        methods:{
+            decrement(){
+                this.num --
+            }
+        }
+    })
+</script>
+</html>
